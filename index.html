@@ -319,6 +319,12 @@ const FIREBASE_CONFIG={
 const useFB=!!FIREBASE_CONFIG.apiKey&&typeof firebase!=="undefined";
 let confirmation=null,rv=null;
 if(useFB)firebase.initializeApp(FIREBASE_CONFIG);
+function freshRecaptcha(){
+  try{if(rv)rv.clear()}catch(_){}
+  const old=document.getElementById("recaptcha"),f=document.createElement("div");f.id="recaptcha";
+  old.parentNode.replaceChild(f,old);
+  rv=new firebase.auth.RecaptchaVerifier("recaptcha",{size:"invisible"});
+}
 function showOtpStep(){document.getElementById("s1").style.display="none";document.getElementById("s2").style.display=""}
 function isEd(p){return EDITORS.includes(p)}
 function setUser(p){
@@ -338,10 +344,13 @@ async function sendOtp(){
   if(!/^[6-9]\d{9}$/.test(n))return toast("Enter a valid 10-digit mobile number");loginPhone=n;
   if(useFB){
     try{
-      if(!rv)rv=new firebase.auth.RecaptchaVerifier("recaptcha",{size:"invisible"});
+      freshRecaptcha();
       confirmation=await firebase.auth().signInWithPhoneNumber("+91"+n,rv);
       showOtpStep();toast("OTP sent by SMS to +91 XXXXXXX"+n.slice(-3));
-    }catch(e){toast("SMS failed: "+(e.code||e.message));try{rv.clear()}catch(_){}rv=null}
+    }catch(e){
+      const M={"auth/unauthorized-domain":"This website domain is not added in Firebase > Authentication > Settings > Authorized domains","auth/operation-not-allowed":"Phone login is not enabled in Firebase > Authentication > Sign-in method","auth/billing-not-enabled":"Firebase billing (Blaze plan) is needed to send real SMS, or use a test number","auth/too-many-requests":"Too many tries. Please wait a few minutes and try again","auth/invalid-phone-number":"Invalid phone number","auth/captcha-check-failed":"Security check failed. Reload the page and try again"};
+      toast("SMS failed: "+(M[e.code]||e.code||e.message),9000);
+      try{rv&&rv.clear()}catch(_){}rv=null}
     return;
   }
   otpVal=String(Math.floor(100000+Math.random()*900000));otpExp=Date.now()+5*60000;
