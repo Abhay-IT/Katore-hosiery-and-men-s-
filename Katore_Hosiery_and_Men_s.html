@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Katore Hosiery and Men's</title>
+<style>
+:root{--g:rgba(255,255,255,.8);--b:rgba(0,0,0,.09);--t:#1c1c1e;--a:#0a84ff}
+*{box-sizing:border-box;margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif}
+html{scroll-behavior:smooth}
+body{color:var(--t);min-height:100vh;background:#eceef1}
+body:before{content:"";position:fixed;inset:0;z-index:-1;transform:translateZ(0);background:linear-gradient(180deg,#ffffff 0%,#eceef1 45%,#d9dce1 100%)}
+.glass{background:var(--g);border:1px solid var(--b);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:22px;box-shadow:0 2px 14px rgba(0,0,0,.08)}
+nav{position:sticky;top:12px;margin:12px auto;max-width:1000px;width:calc(100% - 24px);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:20}
+nav b{font-size:1.05rem}nav a{color:#fff;text-decoration:none;margin-left:16px;font-size:.92rem;opacity:.9}
+section{max-width:1000px;margin:26px auto;padding:0 12px}
+.hero{padding:60px 24px;text-align:center}
+.hero h1{font-size:clamp(2rem,6vw,3.4rem);letter-spacing:-1px}
+.hero p{margin-top:12px;font-size:1.1rem;opacity:.9}
+h2{margin:0 0 14px 6px;font-size:1.6rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.card{overflow:hidden;position:relative;transition:transform .25s}
+.card:hover{transform:translateY(-4px)}
+.card img{width:100%;height:210px;object-fit:cover;display:block;background:#0003}
+.card .in{padding:12px 14px 16px}
+.card h3{font-size:1.05rem}.card .pr{font-weight:700;color:#7dffb3;margin:4px 0}
+.card small{opacity:.85;display:block;margin-top:2px}
+.pad{padding:22px}
+.btn{border:1px solid var(--b);background:var(--g);color:#fff;padding:9px 16px;border-radius:14px;cursor:pointer;font-size:.9rem;}
+.btn.p{background:var(--a);border-color:var(--a)}.btn.d{background:#ff453a;border-color:#ff453a}
+.btn.s{padding:5px 10px;font-size:.78rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.edit [data-k]{outline:1px dashed #ffe066;outline-offset:3px;border-radius:6px;cursor:text}
+.ctl{display:none}.edit .ctl{display:flex}
+.bar{display:none;position:fixed;bottom:14px;left:50%;transform:translateX(-50%);padding:10px 16px;z-index:30;gap:10px;align-items:center;font-size:.85rem}
+.edit .bar{display:flex}
+.modal{position:fixed;inset:0;background:#0006;display:none;align-items:center;justify-content:center;z-index:50;padding:14px}
+.modal.on{display:flex}.modal .box{width:100%;max-width:400px;padding:24px;max-height:92vh;overflow:auto}
+input,textarea,select{width:100%;margin:6px 0;padding:11px 14px;border-radius:12px;border:1px solid var(--b);background:#ffffff26;color:#fff;font-size:1rem;outline:none}
+::placeholder{color:#ffffffaa}option{color:#000}
+label{font-size:.8rem;opacity:.85}
+.credit{position:fixed;right:10px;bottom:10px;font-size:.62rem;padding:5px 10px;border-radius:12px;z-index:25;opacity:.85}
+#toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);padding:12px 20px;z-index:99;display:none;text-align:center}
+footer{text-align:center;padding:30px 12px 70px;opacity:.8;font-size:.85rem}
+
+header.glass{position:sticky;top:10px;margin:10px auto;max-width:1150px;width:calc(100% - 20px);padding:10px 16px;display:flex;gap:12px;align-items:center;z-index:20;flex-wrap:wrap}
+header b{font-size:1.1rem;white-space:nowrap}
+.sw{flex:1;min-width:220px;display:flex;gap:6px}.sw .btn{white-space:nowrap}
+.srch{flex:1;min-width:0;margin:0;border-radius:14px;padding:10px 14px}
+.cats{display:flex;gap:14px;overflow-x:auto;padding:6px 10px 12px;max-width:1150px;margin:8px auto;scrollbar-width:none}
+.cat{flex:0 0 auto;text-align:center;cursor:pointer;font-size:.78rem;width:68px}
+.cat i{display:flex;width:58px;height:58px;margin:0 auto 4px;border-radius:50%;align-items:center;justify-content:center;font-style:normal;font-size:1.6rem;background:var(--g);border:1px solid var(--b)}
+.cat.on i{background:var(--a);border-color:#fff}
+.car{position:relative;max-width:1150px;margin:8px auto;width:calc(100% - 20px);overflow:hidden;border-radius:22px}
+.trk{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.sl{flex:0 0 100%;min-height:230px;padding:36px 8% ;display:flex;flex-direction:column;justify-content:center;background-size:cover;background-position:center;position:relative}
+.sl:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#000a,#0000)}
+.sl>*{position:relative}.sl h2{font-size:clamp(1.5rem,5vw,2.6rem);margin:0}.sl p{margin:8px 0 14px;font-size:1.05rem;max-width:520px}
+.sl .tag{display:inline-block;background:#ff9f0a;color:#000;font-weight:700;padding:3px 12px;border-radius:20px;font-size:.8rem;margin-bottom:8px;width:fit-content}
+.arw{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:56px;border:0;background:#0006;color:#fff;font-size:1.4rem;cursor:pointer;z-index:3}
+.arw.l{left:0;border-radius:0 12px 12px 0}.arw.r{right:0;border-radius:12px 0 0 12px}
+.dots{position:absolute;bottom:10px;width:100%;text-align:center;z-index:3}
+.dots span{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff6;margin:0 3px;cursor:pointer}.dots span.on{background:#fff;width:22px;border-radius:6px}
+.sc{position:absolute;top:10px;right:10px;z-index:4;gap:6px}
+.deals{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+.deals .card{flex:0 0 190px;scroll-snap-align:start}
+.badge{position:absolute;top:10px;left:10px;background:#ff3b30;color:#fff;font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:8px;z-index:2}
+.rt{display:inline-block;background:#30d158;color:#000;font-size:.72rem;font-weight:700;padding:1px 7px;border-radius:6px;margin-top:4px}
+.mrp{text-decoration:line-through;opacity:.65;font-size:.82rem;margin-left:6px;font-weight:400;color:#fff}
+.off{color:#30d158;font-size:.82rem;margin-left:6px}
+.card .btn.wa{width:100%;margin-top:10px;background:#25d366;border-color:#25d366;color:#000;font-weight:600}
+.card img{height:190px}
+
+.card{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(255,255,255,.14);contain:content;transition:none}
+@media(hover:hover){.card{transition:transform .25s}}
+@media(hover:none){.card:hover{transform:none}}
+.car,.deals{will-change:auto}.trk{will-change:transform}
+.fbtn{display:inline-block;margin:6px 0;cursor:pointer;background:var(--a);border-color:var(--a);font-weight:600}
+.pv{display:none;width:100%;max-height:150px;object-fit:cover;border-radius:12px;margin-top:6px}
+.fn{font-size:.78rem;opacity:.85;display:block}
+
+.btn{color:var(--t);background:#fff}
+.btn.p,.btn.d,.btn.fbtn{color:#fff}.btn.p,.btn.fbtn{background:var(--a)}.btn.d{background:#ff453a}
+input,textarea,select{background:#fff;color:#111;border:1px solid #d0d0d6}
+::placeholder{color:#8e8e93}
+.card{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.card img{background:#eee}
+.card .pr{color:#138a36}.mrp{color:#8e8e93}.off{color:#138a36}
+.sl,.sl h2,.sl p{color:#fff}
+.credit{color:#444;background:rgba(255,255,255,.9)}
+footer{color:#555;opacity:1}
+#toast{background:#222;color:#fff;border-color:#222}
+.cat i{background:#fff}.cat.on i{background:var(--a);border-color:var(--a)}
+.bar{background:rgba(255,255,255,.95)}
+
+#drawer{position:fixed;top:0;left:0;bottom:0;width:min(86vw,360px);transform:translateX(-105%);transition:transform .28s;z-index:60;border-radius:0 22px 22px 0;padding:16px;overflow:auto;background:rgba(255,255,255,.97)}
+#drawer.on{transform:none}
+#dback{position:fixed;inset:0;background:#0006;z-index:55;display:none}#dback.on{display:block}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+header .btn.s{white-space:nowrap}
+</style>
+</head>
+<body>
+<header class="glass">
+  <b data-k="shop">Katore Hosiery and Men's</b>
+  <div class="sw"><input class="srch" id="q" placeholder="Search shirts, vests, briefs..." oninput="renderGrid()" onkeydown="if(event.key==='Enter')doSearch()"><button class="btn p" onclick="doSearch()">🔍 Search</button></div>
+  <a href="#" class="btn s" id="loginLink" onclick="loginClick();return false" style="text-decoration:none">Login</a>
+  <button class="btn s" onclick="openMyOrders()">📦 My Orders</button>
+  <button class="btn s p ctl" onclick="viewOrders()">📋 Shop Orders (Accept)</button>
+</header>
+
+<div class="cats" id="cats"></div>
+
+<div class="car glass" id="car">
+  <div class="trk" id="trk"></div>
+  <button class="arw l" onclick="go(-1)">‹</button><button class="arw r" onclick="go(1)">›</button>
+  <div class="dots" id="dots"></div>
+  <div class="ctl sc"><button class="btn s p" onclick="editSlide()">+ Slide</button></div>
+</div>
+
+<section id="dealsS">
+  <h2 data-k="dealsTitle">🔥 Top Deals</h2>
+  <div class="deals" id="deals"></div>
+</section>
+
+<section id="clothes">
+  <h2 data-k="clothesTitle">All Clothes</h2>
+  <div class="row ctl" style="margin:0 0 14px"><button class="btn p" onclick="editProduct()">+ Add Cloth</button></div>
+  <div id="rinfo" style="display:none;align-items:center;gap:10px;margin:0 6px 12px"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="about" class="glass pad">
+  <h2 data-k="aboutTitle">About Us</h2>
+  <p data-k="aboutText">Katore Hosiery and Men's is your trusted local shop for innerwear, hosiery, shirts, trousers and more. Visit us for the best quality at fair prices.</p>
+</section>
+
+<section id="contact" class="glass pad">
+  <h2 data-k="contactTitle">Contact</h2>
+  <p>📍 <span data-k="address">Shop address here</span></p>
+  <p style="margin-top:6px">📞 <span data-k="phone">+91 99XXXXXXXX</span></p>
+  <p style="margin-top:6px">🕘 <span data-k="hours">Mon–Sun: 10 AM – 9 PM</span></p>
+  <div class="row"><button class="btn p" onclick="dirs()">🧭 Get Directions</button><button class="btn" onclick="openMap()">🗺️ View Map</button><button class="btn ctl" onclick="openLoc()">📍 Set Shop Location</button></div>
+  <div id="mapBox"></div>
+</section>
+
+<footer><span data-k="footer">© Katore Hosiery and Men's. All rights reserved.</span></footer>
+
+<div class="glass credit">Developed by Abhay Pradip Adkine</div>
+
+<div class="glass bar"><span>✏️ Edit mode: click any text to change it</span>
+  <button class="btn s" onclick="viewOrders()">📦 Orders</button>
+  <button class="btn s" onclick="resetAll()">Reset</button>
+  <button class="btn s p" onclick="logout()">Logout</button></div>
+
+<div id="recaptcha"></div>
+<div id="toast" class="glass"></div>
+
+<!-- Login modal -->
+<div class="modal" id="loginM"><div class="glass box">
+  <h3>Login</h3>
+  <small style="opacity:.75;display:block">Login with your mobile number (the same number you use on WhatsApp). The OTP will be sent to you by SMS.</small>
+  <div id="s1">
+    <label>Mobile number</label>
+    <input id="ph" type="tel" maxlength="10" inputmode="numeric" placeholder="10-digit mobile number">
+    <div class="row"><button class="btn p" onclick="sendOtp()">Send OTP</button><button class="btn" onclick="closeM('loginM')">Cancel</button></div>
+  </div>
+  <div id="s2" style="display:none">
+    <label>Enter the 6-digit OTP</label>
+    <input id="otp" type="tel" maxlength="6" inputmode="numeric" placeholder="______">
+    <div class="row"><button class="btn p" onclick="verifyOtp()">Verify &amp; Login</button><button class="btn" onclick="sendOtp()">Resend</button></div>
+  </div>
+</div></div>
+
+<!-- Product modal -->
+<div class="modal" id="prodM"><div class="glass box">
+  <h3 id="pt">Add Cloth</h3>
+  <input id="pn" placeholder="Name (e.g. Cotton Vest)">
+  <input id="pp" type="number" placeholder="Selling price ₹ (e.g. 199)"><input id="pm" type="number" placeholder="MRP ₹ (optional, for discount)"><input id="pr" type="number" step="0.1" min="0" max="5" placeholder="Rating 0-5 (optional)">
+  <select id="pc"><option>Hosiery</option><option>Shirt</option><option>Trousers</option><option>Innerwear</option><option>T-Shirt</option><option>Other</option></select>
+  <input id="ps" placeholder="Sizes (e.g. S, M, L, XL)">
+  <textarea id="pd" rows="2" placeholder="Details (fabric, colour...)"></textarea>
+  <label class="btn fbtn" for="pi">📷 Choose Photo</label><input id="pi" type="file" accept="image/*" hidden onchange="pv(this,'pimg')"><span class="fn" id="pimg_n"></span><img id="pimg" class="pv" alt="">
+  <div class="row"><button class="btn p" onclick="saveProduct()">Save</button><button class="btn" onclick="closeM('prodM')">Cancel</button></div>
+</div></div>
+
+
+<div class="modal" id="slM"><div class="glass box">
+  <h3>Slide</h3>
+  <input id="st" placeholder="Offer tag (e.g. 30% OFF)"><input id="sh" placeholder="Heading"><input id="ss" placeholder="Sub text">
+  <label>Background colour</label><select id="sc"><option value="0">Blue-Purple</option><option value="1">Orange-Pink</option><option value="2">Green-Teal</option><option value="3">Dark Red</option></select>
+  <label class="btn fbtn" for="si">📷 Choose Banner Photo (optional)</label><input id="si" type="file" accept="image/*" hidden onchange="pv(this,'simg')"><span class="fn" id="simg_n"></span><img id="simg" class="pv" alt="">
+  <div class="row"><button class="btn p" onclick="saveSlide()">Save</button><button class="btn" onclick="closeM('slM')">Cancel</button></div>
+</div></div>
+<div class="modal" id="mapM"><div class="glass box" style="max-width:520px">
+  <h3>📍 Shop Location</h3><p id="mapAddr" style="margin:6px 0 10px"></p><div id="mapBox2"></div>
+  <div class="row"><button class="btn p" onclick="dirs()">🧭 Get Directions</button><button class="btn ctl" onclick="closeM('mapM');openLoc()">✏️ Change Location</button><button class="btn" onclick="closeM('mapM')">Close</button></div>
+</div></div>
+<div id="dback" onclick="closeDrawer()"></div>
+<div id="drawer" class="glass"><div class="dh"><b>📦 My Orders</b><button class="btn s" onclick="closeDrawer()">✕</button></div><div id="myList"></div></div>
+<div class="modal" id="locM"><div class="glass box">
+  <h3>Shop Location</h3>
+  <input id="lq" placeholder="Shop address, Google Maps link, or lat,lng">
+  <button class="btn" type="button" onclick="locFromGps()">📍 Use my current location</button>
+  <div class="row"><button class="btn p" onclick="saveLoc()">Save</button><button class="btn" onclick="closeM('locM')">Cancel</button></div>
+  <small style="opacity:.7;display:block;margin-top:8px">Tip: stand inside the shop and press “Use my current location” for the exact spot.</small>
+</div></div>
+<div class="modal" id="orderM"><div class="glass box">
+  <h3 id="ot">Order</h3>
+  <input id="oname" placeholder="Your name">
+  <input id="ophone" type="tel" readonly placeholder="Your mobile number">
+  <input id="osz" placeholder="Size">
+  <input id="oq" type="number" min="1" max="50" value="1" placeholder="Quantity">
+  <textarea id="onote" rows="2" placeholder="Note / address (optional)"></textarea>
+  <button class="btn s" type="button" onclick="addMyLoc()">📍 Add my location</button>
+  <div class="row"><button class="btn p" onclick="placeOrder()">Place Order</button><button class="btn" onclick="closeM('orderM')">Cancel</button></div>
+  <small style="opacity:.7;display:block;margin-top:8px">The shop owner will be notified automatically. You will get an SMS once your order is accepted.</small>
+</div></div>
+<div class="modal" id="ordersM"><div class="glass box"><h3>Recent Orders</h3><div id="ordList"></div>
+  <div class="row"><button class="btn" onclick="closeM('ordersM')">Close</button></div></div></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const OWNER="9921291361", EDITORS=["9921291361","7020328725","9145701990"], KEY="katore_v2", SES="katore_owner", ORD="katore_orders";
+const noImg=()=>"data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='400' height='400' fill='#ffffff22'/><text x='200' y='215' font-size='60' text-anchor='middle' fill='#fff'>👕</text></svg>`);
+const GR=["linear-gradient(120deg,#0a84ff,#bf5af2)","linear-gradient(120deg,#ff9f0a,#ff375f)","linear-gradient(120deg,#30d158,#0a9396)","linear-gradient(120deg,#7a0019,#ff453a)"];
+const CATS=[["All","🛍️"],["Hosiery","🧦"],["Shirt","👔"],["Trousers","👖"],["Innerwear","🩲"],["T-Shirt","👕"],["Other","✨"]];
+const DEF={texts:{},slides:[
+ {id:1,tag:"NEW ARRIVALS",h:"Premium Hosiery & Men's Wear",s:"Comfort and style at honest prices",c:0,img:""},
+ {id:2,tag:"UP TO 30% OFF",h:"Festival Sale",s:"Shirts, trousers and more — limited time",c:1,img:""},
+ {id:3,tag:"BEST SELLER",h:"Cotton Vests & Briefs",s:"Soft, breathable, long-lasting",c:2,img:""}],
+products:[
+ {id:1,name:"Cotton Vest",price:149,mrp:199,rating:4.3,cat:"Hosiery",sizes:"S, M, L, XL",desc:"Soft breathable cotton.",img:""},
+ {id:2,name:"Formal Shirt",price:599,mrp:899,rating:4.5,cat:"Shirt",sizes:"M, L, XL",desc:"Wrinkle-free fabric.",img:""},
+ {id:3,name:"Cotton Briefs (Pack of 3)",price:299,mrp:399,rating:4.2,cat:"Innerwear",sizes:"M, L, XL",desc:"Comfort-fit elastic.",img:""},
+ {id:4,name:"Slim Fit Trousers",price:799,mrp:1199,rating:4.4,cat:"Trousers",sizes:"30, 32, 34, 36",desc:"Stretch fabric.",img:""}]};
+let D=load(), cat="All", si=0, si2, timer, slId=null, owner=false, editId=null, otpVal=null, otpExp=0, user=null, pendingOrder=null, loginPhone="";
+
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||structuredClone(DEF)}catch(e){return structuredClone(DEF)}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(e){toast("Storage full — use a smaller photo")}}
+function toast(m,ms=4500){const t=document.getElementById("toast");t.textContent=m;t.style.display="block";clearTimeout(t._h);t._h=setTimeout(()=>t.style.display="none",ms)}
+function pv(inp,id){const f=inp.files[0],im=document.getElementById(id);document.getElementById(id+"_n").textContent=f?("✓ "+f.name):"";
+  if(f){im.src=URL.createObjectURL(f);im.style.display="block"}else{im.style.display="none"}}
+function showPv(id,src){const im=document.getElementById(id);document.getElementById(id+"_n").textContent="";if(src){im.src=src;im.style.display="block"}else{im.removeAttribute("src");im.style.display="none"}}
+function closeM(id){document.getElementById(id).classList.remove("on")}
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- render ---------- */
+function applyTexts(){document.querySelectorAll("[data-k]").forEach(e=>{if(D.texts[e.dataset.k]!==undefined&&document.activeElement!==e)e.innerHTML=D.texts[e.dataset.k]});renderMap()}
+function card(p){
+  const off=p.mrp>p.price?Math.round((p.mrp-p.price)/p.mrp*100):0, num=OWNER;
+  const msg=encodeURIComponent("Hello Katore Hosiery, I want to order: "+p.name+" (₹"+p.price+")");
+  return `<div class="glass card">${off?`<span class="badge">${off}% OFF</span>`:""}<img loading="lazy" decoding="async" src="${p.img||noImg()}" alt="${esc(p.name)}">
+   <div class="in"><h3>${esc(p.name)}</h3>${p.rating?`<span class="rt">${p.rating} ★</span>`:""}
+   <div class="pr">₹${esc(p.price)}${off?`<span class="mrp">₹${esc(p.mrp)}</span><span class="off">${off}% off</span>`:""}</div>
+   <small>${esc(p.cat)} • ${esc(p.sizes)}</small><small>${esc(p.desc)}</small>
+   <button class="btn wa" onclick="openOrder(${p.id})">🛒 Order Now</button>
+   <div class="row ctl"><button class="btn s" onclick="editProduct(${p.id})">Edit</button><button class="btn s d" onclick="delProduct(${p.id})">Delete</button></div></div></div>`}
+function renderCats(){document.getElementById("cats").innerHTML=
+  `<div class="cat" onclick="openMap()"><i>📍</i>Location</div>`+
+  CATS.map(c=>`<div class="cat ${cat===c[0]?"on":""}" onclick="pickCat('${c[0]}')"><i>${c[1]}</i>${c[0]}</div>`).join("")}
+function pickCat(n){cat=n;renderCats();renderGrid();if(n!=="All")scrollToResults()}
+function clearFilter(){cat="All";document.getElementById("q").value="";renderCats();renderGrid();window.scrollTo({top:0,behavior:"smooth"})}
+function scrollToResults(){const c=document.getElementById("cats"),h=document.querySelector("header").offsetHeight;
+  window.scrollTo({top:Math.max(0,c.getBoundingClientRect().bottom+scrollY-h-24),behavior:"smooth"})}
+function renderGrid(){
+  const qv=document.getElementById("q").value.trim().toLowerCase();
+  const norm=t=>String(t==null?"":t).toLowerCase().replace(/[\s\-]/g,"");
+  const words=qv.split(/\s+/).filter(Boolean).map(norm);
+  const L=D.products.filter(p=>(cat==="All"||p.cat===cat)&&(()=>{const h=norm([p.name,p.desc,p.cat,p.sizes].join(" "));return words.every(w=>h.includes(w))})());
+  const f=cat!=="All"||qv!=="";
+  document.getElementById("grid").innerHTML=L.map(card).join("")||'<p class="glass pad">No clothes found. <button class="btn s p" onclick="clearFilter()">Show all</button></p>';
+  const ri=document.getElementById("rinfo");ri.style.display=f?"flex":"none";
+  if(f)ri.innerHTML='<b>'+(qv?'Results for “'+esc(qv)+'”':esc(cat))+' — '+L.length+' item'+(L.length==1?'':'s')+'</b><button class="btn s" onclick="clearFilter()">✕ Clear</button>';
+  const dl=D.products.filter(p=>p.mrp>p.price).sort((x,y)=>(y.mrp-y.price)/y.mrp-(x.mrp-x.price)/x.mrp);
+  document.getElementById("car").style.display=f?"none":"";
+  document.getElementById("dealsS").style.display=(dl.length&&!f)?"":"none";
+  document.getElementById("deals").innerHTML=f?"":dl.map(card).join("");
+}
+/* ---------- carousel ---------- */
+function renderSlides(){
+  document.getElementById("trk").innerHTML=D.slides.map(x=>`<div class="sl" style="background-image:${x.img?`url(${x.img}),`:""}${GR[x.c]||GR[0]}">
+   ${x.tag?`<span class="tag">${esc(x.tag)}</span>`:""}<h2>${esc(x.h)}</h2><p>${esc(x.s)}</p>
+   <div class="row ctl"><button class="btn s" onclick="editSlide(${x.id})">Edit slide</button><button class="btn s d" onclick="delSlide(${x.id})">Delete</button></div></div>`).join("");
+  document.getElementById("dots").innerHTML=D.slides.map((_,i)=>`<span onclick="show(${i})"></span>`).join("");
+  show(Math.min(si,D.slides.length-1));
+}
+function show(i){const n=D.slides.length;if(!n)return;si=(i+n)%n;document.getElementById("trk").style.transform=`translateX(-${si*100}%)`;
+  document.querySelectorAll("#dots span").forEach((d,k)=>d.classList.toggle("on",k===si));clearInterval(timer);timer=setInterval(()=>show(si+1),4500)}
+function go(d){show(si+d)}
+(function(){let x0=null;const c=document.getElementById("car");
+ c.addEventListener("touchstart",e=>x0=e.touches[0].clientX,{passive:true});
+ c.addEventListener("touchend",e=>{if(x0===null)return;const d=e.changedTouches[0].clientX-x0;if(Math.abs(d)>40)go(d<0?1:-1);x0=null})})();
+function editSlide(id){slId=id||null;const x=D.slides.find(v=>v.id===id)||{};st.value=x.tag||"";sh.value=x.h||"";ss.value=x.s||"";sc.value=x.c||0;si2=null;document.getElementById("si").value="";showPv("simg",x.img);document.getElementById("slM").classList.add("on")}
+async function saveSlide(){const old=D.slides.find(v=>v.id===slId);let img=old?old.img:"";const f=document.getElementById("si").files[0];if(f)img=await shrink(f,900);
+ const o={id:slId||Date.now(),tag:st.value.trim(),h:sh.value.trim()||"Heading",s:ss.value.trim(),c:+sc.value,img};
+ if(old)Object.assign(old,o);else D.slides.push(o);persistSlide(old||o);renderSlides();setEdit(true);closeM("slM")}
+function delSlide(id){if(confirm("Delete this slide?")){D.slides=D.slides.filter(v=>v.id!==id);removeSlide(id);renderSlides()}}
+function setEdit(on){
+  owner=on;document.body.classList.toggle("edit",on);
+  document.querySelectorAll("[data-k]").forEach(e=>{e.contentEditable=on;
+    if(on){e.oninput=()=>{D.texts[e.dataset.k]=e.innerHTML;clearTimeout(e._t);e._t=setTimeout(persistTexts,500)}}else e.oninput=null});
+}
+
+/* ---------- OTP login ---------- */
+function openLogin(){if(user)return toast("You are already logged in");document.getElementById("s1").style.display="";document.getElementById("s2").style.display="none";document.getElementById("loginM").classList.add("on")}
+/* ===== SMS GATEWAY: Firebase Phone Auth =====
+   Fill these 4 values from Firebase Console > Project settings > Your apps (Web).
+   While apiKey is empty, the site stays in DEMO mode (OTP shown on screen). */
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyBdf4WE_-X-oFD7-BGmQbanRpn9CND04o4",
+  authDomain:"katore-hosiery-and-men-s.firebaseapp.com",
+  projectId:"katore-hosiery-and-men-s",
+  storageBucket:"katore-hosiery-and-men-s.firebasestorage.app",
+  messagingSenderId:"875250773784",
+  appId:"1:875250773784:web:6bb96ed6293c34498b386d"
+};
+const useFB=!!FIREBASE_CONFIG.apiKey&&typeof firebase!=="undefined";
+let confirmation=null,rv=null;
+if(useFB)firebase.initializeApp(FIREBASE_CONFIG);
+function showOtpStep(){document.getElementById("s1").style.display="none";document.getElementById("s2").style.display=""}
+function isEd(p){return EDITORS.includes(p)}
+function setUser(p){
+  user=p||null;setEdit(!!user&&isEd(user));
+  document.getElementById("loginLink").textContent=user?("👤 ••"+user.slice(-4)+" · Logout"):"Login";
+  loadMyOrders();
+}
+function loginClick(){if(user){if(confirm("Logout?"))logout()}else openLogin()}
+function loginOK(p){
+  closeM("loginM");try{sessionStorage.setItem(SES,p)}catch(e){}
+  if(isEd(p))seedIfEmpty();
+  setUser(p);toast(isEd(p)?"Logged in ✓ — you can edit the website":"Logged in ✓");
+  if(pendingOrder){const id=pendingOrder;pendingOrder=null;setTimeout(()=>openOrder(id),300)}
+}
+async function sendOtp(){
+  const n=document.getElementById("ph").value.trim();
+  if(!/^[6-9]\d{9}$/.test(n))return toast("Enter a valid 10-digit mobile number");loginPhone=n;
+  if(useFB){
+    try{
+      if(!rv)rv=new firebase.auth.RecaptchaVerifier("recaptcha",{size:"invisible"});
+      confirmation=await firebase.auth().signInWithPhoneNumber("+91"+n,rv);
+      showOtpStep();toast("OTP sent by SMS to +91 XXXXXXX"+n.slice(-3));
+    }catch(e){toast("SMS failed: "+(e.code||e.message));try{rv.clear()}catch(_){}rv=null}
+    return;
+  }
+  otpVal=String(Math.floor(100000+Math.random()*900000));otpExp=Date.now()+5*60000;
+  toast("DEMO MODE — your OTP is "+otpVal+" (SMS gateway not connected)",12000);showOtpStep();
+}
+async function verifyOtp(){
+  const v=document.getElementById("otp").value.trim();
+  if(useFB){
+    if(!confirmation)return toast("Send OTP first");
+    try{
+      const r=await confirmation.confirm(v);
+      loginOK(r.user.phoneNumber.replace("+91",""));
+    }catch(e){toast("Wrong or expired OTP")}
+    return;
+  }
+  if(!otpVal||Date.now()>otpExp)return toast("OTP expired — send again");
+  if(v!==otpVal)return toast("Wrong OTP");
+  otpVal=null;loginOK(loginPhone);
+}
+function logout(){try{if(useFB)firebase.auth().signOut()}catch(e){}try{sessionStorage.removeItem(SES)}catch(e){}setUser(null);toast("Logged out")}
+
+/* ---------- products ---------- */
+function editProduct(id){
+  editId=id||null;const p=D.products.find(x=>x.id===id)||{};
+  document.getElementById("pt").textContent=id?"Edit Cloth":"Add Cloth";
+  pn.value=p.name||"";pp.value=p.price||"";pm.value=p.mrp||"";pr.value=p.rating||"";pc.value=p.cat||"Hosiery";ps.value=p.sizes||"";pd.value=p.desc||"";pi.value="";showPv("pimg",p.img);
+  document.getElementById("prodM").classList.add("on");
+}
+function delProduct(id){if(confirm("Delete this item?")){D.products=D.products.filter(p=>p.id!==id);removeProduct(id);renderGrid()}}
+function shrink(file,max=420){return new Promise(r=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{
+  const s=Math.min(1,max/Math.max(im.width,im.height)),c=document.createElement("canvas");c.width=im.width*s;c.height=im.height*s;
+  c.getContext("2d").drawImage(im,0,0,c.width,c.height);r(c.toDataURL("image/jpeg",.72))};im.src=fr.result};fr.readAsDataURL(file)})}
+async function saveProduct(){
+  if(!pn.value.trim())return toast("Enter a name");
+  const old=D.products.find(x=>x.id===editId);
+  let img=old?old.img:"";if(pi.files[0])img=await shrink(pi.files[0]);
+  const o={id:editId||Date.now(),name:pn.value.trim(),price:+pp.value||0,mrp:+pm.value||0,rating:+pr.value||0,cat:pc.value,sizes:ps.value.trim(),desc:pd.value.trim(),img};
+  if(old)Object.assign(old,o);else D.products.push(o);
+  persistProduct(old||o);renderGrid();setEdit(true);closeM("prodM");
+}
+
+
+/* ================= CLOUD DATA (Firestore) — shared with all visitors ================= */
+const cloud={pDocs:[],sDocs:[],seeded:false,meta:false};let db;
+const colP=()=>db.collection("products"),colS=()=>db.collection("slides");
+function fbErr(e){toast("Cloud save failed: "+(e.code||e.message),8000)}
+function recompute(){
+  D.products=(cloud.pDocs.length||cloud.seeded)?[...cloud.pDocs].sort((a,b)=>a.id-b.id):structuredClone(DEF.products);
+  D.slides=(cloud.sDocs.length||cloud.seeded)?[...cloud.sDocs].sort((a,b)=>a.id-b.id):structuredClone(DEF.slides);
+  renderGrid();renderSlides();
+}
+function initCloud(){
+  db=firebase.firestore();D={texts:{},products:[],slides:[]};
+  db.doc("site/texts").onSnapshot(d=>{D.texts=d.exists?d.data():{};applyTexts()});
+  db.doc("site/meta").onSnapshot(d=>{cloud.meta=true;cloud.seeded=d.exists;recompute()});
+  colP().onSnapshot(q=>{cloud.pDocs=q.docs.map(x=>x.data());recompute()});
+  colS().onSnapshot(q=>{cloud.sDocs=q.docs.map(x=>x.data());recompute()});
+  firebase.auth().onAuthStateChanged(u=>{setUser(u&&u.phoneNumber?u.phoneNumber.replace("+91",""):null)});
+}
+async function seedIfEmpty(){
+  if(!useFB||!cloud.meta||cloud.seeded)return;
+  const b=db.batch();DEF.products.forEach(p=>b.set(colP().doc(String(p.id)),p));DEF.slides.forEach(x=>b.set(colS().doc(String(x.id)),x));b.set(db.doc("site/meta"),{seeded:true});
+  try{await b.commit()}catch(e){fbErr(e)}
+}
+function persistTexts(){if(!useFB)return save();db.doc("site/texts").set(D.texts,{merge:true}).catch(fbErr)}
+function persistProduct(p){if(!useFB)return save();colP().doc(String(p.id)).set(p).catch(fbErr)}
+function persistSlide(x){if(!useFB)return save();colS().doc(String(x.id)).set(x).catch(fbErr)}
+function removeProduct(id){if(!useFB)return save();colP().doc(String(id)).delete().catch(fbErr)}
+function removeSlide(id){if(!useFB)return save();colS().doc(String(id)).delete().catch(fbErr)}
+async function resetAll(){
+  if(!confirm("Reset the whole website to default?"))return;
+  if(!useFB){D=structuredClone(DEF);save();location.reload();return}
+  try{const b=db.batch();(await colP().get()).forEach(d=>b.delete(d.ref));(await colS().get()).forEach(d=>b.delete(d.ref));b.delete(db.doc("site/texts"));
+    DEF.products.forEach(p=>b.set(colP().doc(String(p.id)),p));DEF.slides.forEach(x=>b.set(colS().doc(String(x.id)),x));b.set(db.doc("site/meta"),{seeded:true});
+    await b.commit();toast("Website reset to default")}catch(e){fbErr(e)}
+}
+
+/* ================= ORDERS ================= */
+/* ================= SEARCH & LOCATION ================= */
+function doSearch(){renderGrid();scrollToResults()}
+var lastMap=null;
+function locQ(){return (D.texts._loc||"").trim()}
+function renderMap(){const box=document.getElementById("mapBox");if(box)box.innerHTML=locQ()?"":'<p style="opacity:.7;margin-top:10px">Shop location not set yet.</p>'}
+function mapHTML(q){
+  if(!q)return '<p style="opacity:.75">Shop location is not set yet.</p>';
+  if(/^https?:/i.test(q))return '<p>Tap “Get Directions” to open the shop on the map.</p>';
+  return '<iframe title="Shop map" style="width:100%;height:260px;border:0;border-radius:16px" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q='+encodeURIComponent(q)+'&z=16&output=embed"></iframe>';
+}
+function openMap(){document.getElementById("mapAddr").textContent=document.querySelector('[data-k="address"]').textContent;
+  document.getElementById("mapBox2").innerHTML=mapHTML(locQ());document.getElementById("mapM").classList.add("on")}
+function dirs(){const q=locQ()||document.querySelector('[data-k="address"]').textContent.trim();
+  window.open(/^https?:/i.test(q)?q:"https://www.google.com/maps/dir/?api=1&destination="+encodeURIComponent(q),"_blank")}
+function openLoc(){document.getElementById("lq").value=locQ();document.getElementById("locM").classList.add("on")}
+function gps(cb){if(!navigator.geolocation)return toast("Location is not supported on this device");
+  toast("Getting location… please allow permission",6000);
+  navigator.geolocation.getCurrentPosition(p=>cb(p.coords.latitude.toFixed(6)+","+p.coords.longitude.toFixed(6)),()=>toast("Could not get location. Please allow location permission."),{enableHighAccuracy:true,timeout:15000})}
+function locFromGps(){gps(v=>{document.getElementById("lq").value=v;toast("Location captured ✓ — now press Save")})}
+function saveLoc(){D.texts._loc=document.getElementById("lq").value.trim();lastMap=null;persistTexts();renderMap();closeM("locM");toast("Shop location saved ✓")}
+function addMyLoc(){gps(v=>{const n=document.getElementById("onote");n.value=(n.value?n.value+"\n":"")+"My location: https://maps.google.com/?q="+v;toast("Location added ✓")})}
+
+/* ================= MY ORDERS (swipe right) ================= */
+let myOrders=[],unsubO=null;
+function loadMyOrders(){
+  if(unsubO){unsubO();unsubO=null}
+  if(!user){myOrders=[];renderMyOrders();return}
+  if(useFB){const u=firebase.auth().currentUser;if(!u)return;
+    unsubO=db.collection("orders").where("uid","==",u.uid).onSnapshot(q=>{
+      myOrders=q.docs.map(d=>{const x=d.data();return {...x,_t:x.createdAt?x.createdAt.toMillis():Date.now()}}).sort((a,b)=>b._t-a._t);renderMyOrders()},fbErr);
+  }else{try{myOrders=(JSON.parse(localStorage.getItem(ORD))||[]).filter(o=>o.phone===user).sort((a,b)=>b._t-a._t)}catch(e){myOrders=[]}renderMyOrders()}
+}
+function stBadge(s){s=s||"pending";
+  if(s==="accepted")return '<span class="rt">Accepted ✓</span>';
+  if(s==="rejected")return '<span class="rt" style="background:#ff453a;color:#fff">Rejected ✗</span>';
+  return '<span class="rt" style="background:#ff9f0a">Waiting for shop approval ⏳</span>'}
+function renderMyOrders(){
+  const L=document.getElementById("myList");if(!L)return;
+  if(!user){L.innerHTML='<p style="margin:10px 0">Login to see your orders.</p><button class="btn p" onclick="closeDrawer();openLogin()">Login</button>';return}
+  L.innerHTML=myOrders.map(o=>`<div class="card" style="padding:12px;margin:10px 0"><b>${esc(o.item)}</b> ×${esc(o.qty)}${o.size?" ("+esc(o.size)+")":""}<br>
+    <span style="color:#138a36;font-weight:700">₹${esc((+o.price||0)*(+o.qty||1))}</span> ${stBadge(o.status)}<br>
+    <small>${esc(new Date(o._t).toLocaleString())}</small>${o.note?"<br><small>"+esc(o.note)+"</small>":""}</div>`).join("")||'<p style="margin:10px 0">You have not ordered anything yet.</p>';
+}
+function openMyOrders(){renderMyOrders();document.getElementById("drawer").classList.add("on");document.getElementById("dback").classList.add("on")}
+function closeDrawer(){document.getElementById("drawer").classList.remove("on");document.getElementById("dback").classList.remove("on")}
+(function(){let x0=null,y0=null,blocked=false;
+  document.addEventListener("touchstart",e=>{const t=e.target;blocked=!!(t.closest&&t.closest("#car,.cats,.deals,.modal,#drawer,input,textarea,select"));x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  document.addEventListener("touchend",e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;
+    const open=document.getElementById("drawer").classList.contains("on");
+    if(!open&&!blocked&&dx>80&&Math.abs(dy)<60)openMyOrders();
+    else if(open&&dx<-60&&Math.abs(dy)<60)closeDrawer();
+    x0=null})})();
+
+
+let ordP=null;
+function openOrder(id){if(!user){pendingOrder=id;toast("Please login first to place an order");openLogin();return}ordP=D.products.find(p=>p.id===id);if(!ordP)return;document.getElementById("ophone").value=user;
+  document.getElementById("ot").textContent="Order: "+ordP.name+" — ₹"+ordP.price;
+  document.getElementById("oq").value=1;document.getElementById("osz").value="";document.getElementById("osz").placeholder="Size ("+(ordP.sizes||"")+")";
+  document.getElementById("orderM").classList.add("on")}
+function placeOrder(){if(!user)return toast("Please login first");
+  const v=id=>document.getElementById(id).value.trim(),n=v("oname"),ph=v("ophone");
+  if(n.length<2)return toast("Please enter your name");
+  if(!/^[6-9]\d{9}$/.test(ph))return toast("Enter a valid 10-digit mobile number");
+  const o={item:ordP.name,price:+ordP.price||0,qty:Math.max(1,Math.min(50,+v("oq")||1)),size:v("osz").slice(0,20),name:n.slice(0,50),phone:ph,note:v("onote").slice(0,150),status:"pending"};
+  if(!useFB){try{const a=JSON.parse(localStorage.getItem(ORD))||[];a.push({...o,_t:Date.now()});localStorage.setItem(ORD,JSON.stringify(a))}catch(e){}loadMyOrders()}
+  else db.collection("orders").add({...o,uid:firebase.auth().currentUser.uid,createdAt:firebase.firestore.FieldValue.serverTimestamp()}).catch(e=>toast("Order could not be saved: "+(e.code||e.message),8000));
+  closeM("orderM");toast("Order placed ✓ — waiting for shop owner approval. Swipe right to see your orders",7000);
+}
+function localOrders(){try{return JSON.parse(localStorage.getItem(ORD))||[]}catch(e){return[]}}
+async function setOrderStatus(id,st){
+  if(!user||!isEd(user))return toast("Only the shop owner can do this");
+  if(!useFB){const a=localOrders(),o=a.find(x=>String(x._t)===String(id));
+    if(o){o.status=st;try{localStorage.setItem(ORD,JSON.stringify(a))}catch(e){}}
+    toast(st==="accepted"?"Order accepted ✓":"Order rejected",4000);viewOrders();loadMyOrders();return}
+  try{await db.collection("orders").doc(id).update({status:st,decidedAt:firebase.firestore.FieldValue.serverTimestamp()});
+    toast(st==="accepted"?"Order accepted ✓ — SMS is being sent":"Order rejected",5000);viewOrders()}catch(e){fbErr(e)}
+}
+function ordRow(o,id,t){
+  const st=o.status||"pending";id=esc(id);
+  return `<div class="glass pad" style="margin:8px 0;padding:12px"><b>${esc(o.item)}</b> ×${esc(o.qty)} ${o.size?"("+esc(o.size)+")":""} — ₹${esc(o.price)}<br>${esc(o.name)} • <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a><br>${stBadge(st)}<br><small>${esc(t)}${useFB?" • Alerts: "+esc(o.sms||"pending"):""}</small>${o.note?"<br><small>"+esc(o.note)+"</small>":""}
+    ${st==="pending"?`<div class="row"><button class="btn s p" onclick="setOrderStatus('${id}','accepted')">✓ Accept</button><button class="btn s d" onclick="setOrderStatus('${id}','rejected')">✗ Reject</button></div>`:""}</div>`}
+async function viewOrders(){
+  if(!user||!isEd(user))return toast("Only the shop owner can see all orders");
+  const L=document.getElementById("ordList");L.textContent="Loading…";document.getElementById("ordersM").classList.add("on");
+  if(!useFB){const a=localOrders().sort((x,y)=>y._t-x._t);
+    L.innerHTML=a.map(o=>ordRow(o,o._t,new Date(o._t).toLocaleString())).join("")||"No orders yet.";return}
+  try{const q=await db.collection("orders").orderBy("createdAt","desc").limit(30).get();
+    L.innerHTML=q.docs.map(d=>{const o=d.data();return ordRow(o,d.id,o.createdAt?o.createdAt.toDate().toLocaleString():"")}).join("")||"No orders yet."}
+  catch(e){L.textContent="";fbErr(e)}
+}
+
+applyTexts();renderCats();renderGrid();renderSlides();
+if(useFB)initCloud();else{try{const sv=sessionStorage.getItem(SES);if(sv&&sv.length>3)setUser(sv)}catch(e){}}
+</script>
+
+<!-- ===== BACKEND SETUP (not executed by the browser) =====
+     Website cannot send SMS safely by itself. Copy the 3 parts below from this file into your Firebase project once. -->
+<script type="text/plain" id="backend-setup">
+=== PART 1: functions/index.js  (Cloud Function: automatic WhatsApp + SMS to the 3 shop numbers, SMS to customer) ===
+// SETUP (one time):
+// 1) Meta WhatsApp Business Cloud API: create app -> add WhatsApp -> get PHONE_NUMBER_ID and a permanent ACCESS TOKEN.
+// 2) Create + get approved a message template named  shop_order_update  (language: English, category: Utility)
+//    Body text:  Katore Hosiery order update: {{1}}
+// 3) Twilio account for SMS (used for the customer SMS and as backup SMS to the owners).
+// 4) firebase functions:secrets:set  WA_TOKEN  WA_PHONE_ID  TWILIO_SID  TWILIO_TOKEN  TWILIO_FROM  then  firebase deploy --only functions
+//    (Firebase Blaze plan is required for Cloud Functions.)
+const {onDocumentCreated, onDocumentUpdated} = require("firebase-functions/v2/firestore");
+const {defineSecret, defineString} = require("firebase-functions/params");
+const admin = require("firebase-admin");
+admin.initializeApp();
+
+const WA_TOKEN = defineSecret("WA_TOKEN");
+const WA_PHONE_ID = defineSecret("WA_PHONE_ID");
+const WA_TEMPLATE = defineString("WA_TEMPLATE", {default: "shop_order_update"});
+const SID = defineSecret("TWILIO_SID");
+const TOKEN = defineSecret("TWILIO_TOKEN");
+const FROM = defineSecret("TWILIO_FROM");
+const OWNERS = ["9921291361", "7020328725", "9145701990"]; // these 3 get every order automatically on WhatsApp + SMS
+const secrets = {secrets: [WA_TOKEN, WA_PHONE_ID, SID, TOKEN, FROM]};
+
+// WhatsApp message (template) to one number
+async function sendWa(n, text) {
+  const r = await fetch(`https://graph.facebook.com/v21.0/${WA_PHONE_ID.value()}/messages`, {
+    method: "POST",
+    headers: {Authorization: "Bearer " + WA_TOKEN.value(), "Content-Type": "application/json"},
+    body: JSON.stringify({
+      messaging_product: "whatsapp",
+      to: "91" + n,
+      type: "template",
+      template: {
+        name: WA_TEMPLATE.value(),
+        language: {code: "en"},
+        // template variables cannot contain new lines
+        components: [{type: "body", parameters: [{type: "text", text: text.replace(/\s*\n\s*/g, " | ").slice(0, 900)}]}],
+      },
+    }),
+  });
+  if (!r.ok) throw new Error(await r.text());
+}
+// SMS to one number
+async function sendSms(n, body) {
+  const r = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${SID.value()}/Messages.json`, {
+    method: "POST",
+    headers: {
+      Authorization: "Basic " + Buffer.from(SID.value() + ":" + TOKEN.value()).toString("base64"),
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({To: "+91" + n, From: FROM.value(), Body: body}),
+  });
+  if (!r.ok) throw new Error(await r.text());
+}
+
+// WhatsApp + SMS to all 3 shop numbers. Errors are written to the Firebase Functions log.
+async function notifyOwners(text) {
+  const jobs = [];
+  OWNERS.forEach((n) => { jobs.push(sendWa(n, text)); jobs.push(sendSms(n, text)); });
+  const res = await Promise.allSettled(jobs);
+  res.forEach((r) => { if (r.status === "rejected") console.error(String(r.reason)); });
+  return res;
+}
+const count = (res) => `${res.filter((r) => r.status === "fulfilled").length}/${res.length} sent`;
+
+const line = (o) =>
+  `${o.item} x${o.qty}${o.size ? " (" + o.size + ")" : ""} = Rs.${(+o.price || 0) * (+o.qty || 1)}\n` +
+  `${o.name}, ${o.phone}${o.note ? "\nNote: " + o.note : ""}`;
+
+// 1) New order -> automatic message to the 3 shop numbers (the customer gets nothing on WhatsApp)
+exports.onOrderCreated = onDocumentCreated({document: "orders/{id}", ...secrets}, async (event) => {
+  const o = event.data.data();
+  const res = await notifyOwners("NEW ORDER - waiting for approval: " + line(o));
+  await event.data.ref.update({sms: "owners " + count(res)});
+});
+
+// 2) Owner accepted / rejected -> SMS to customer (not WhatsApp) + WhatsApp/SMS to the 3 shop numbers
+exports.onOrderDecided = onDocumentUpdated({document: "orders/{id}", ...secrets}, async (event) => {
+  const before = event.data.before.data();
+  const after = event.data.after.data();
+  if (before.status === after.status) return;
+  if (after.status !== "accepted" && after.status !== "rejected") return;
+  const ok = after.status === "accepted";
+  let cust = "sent";
+  try {
+    await sendSms(after.phone, ok ? "Katore Hosiery: Your order is ACCEPTED.\n" + line(after)
+      : "Katore Hosiery: Sorry, your order could not be accepted.\n" + line(after));
+  } catch (e) { console.error(String(e)); cust = "failed"; }
+  const res = await notifyOwners((ok ? "ORDER ACCEPTED: " : "ORDER REJECTED: ") + line(after));
+  await event.data.after.ref.update({sms: `${after.status}: customer ${cust}, owners ${count(res)}`});
+});
+
+=== PART 2: functions/package.json ===
+{
+  "name": "katore-functions",
+  "engines": {"node": "20"},
+  "main": "index.js",
+  "dependencies": {"firebase-admin": "^12.0.0", "firebase-functions": "^5.0.0"}
+}
+=== PART 3: Firestore Rules (keep your old rules for products/slides/site) ===
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isOwner() {
+      return request.auth != null && request.auth.token.phone_number in
+        ["+919921291361", "+917020328725", "+919145701990"];
+    }
+    match /orders/{id} {
+      // customer can only create his own order and only as "pending"
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == "pending";
+      // customer reads own orders; owners read all
+      allow read: if request.auth != null && (resource.data.uid == request.auth.uid || isOwner());
+      // only owners may accept / reject
+      allow update: if isOwner()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["status", "decidedAt"]);
+    }
+    // keep your existing rules for products, slides and site/* below
+  }
+}
+
+</script>
+</body>
+</html>
